@@ -4,7 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skillbox.currency.exchange.dto.CurrencyDto;
+import ru.skillbox.currency.exchange.dto.ShortCurrencyDto;
 import ru.skillbox.currency.exchange.service.CurrencyService;
+
+import java.math.BigDecimal;
+import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +21,11 @@ public class CurrencyController {
         return ResponseEntity.ok(service.getById(id));
     }
 
+    @GetMapping
+    ResponseEntity<Collection<ShortCurrencyDto>> getAll() { return ResponseEntity.ok(service.getAll()); }
+
     @GetMapping(value = "/convert")
-    ResponseEntity<Double> convertValue(@RequestParam("value") Long value, @RequestParam("numCode") Long numCode) {
+    ResponseEntity<BigDecimal> convertValue(@RequestParam("value") Long value, @RequestParam("numCode") Long numCode) {
         return ResponseEntity.ok(service.convertValue(value, numCode));
     }
 

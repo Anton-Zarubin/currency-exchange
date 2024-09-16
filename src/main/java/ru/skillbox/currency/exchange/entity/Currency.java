@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Setter
 @Getter
@@ -26,7 +27,7 @@ public class Currency {
     private Long nominal;
 
     @Column(name = "value")
-    private Double value;
+    private BigDecimal value;
 
     @Column(name = "iso_num_code")
     private Long isoNumCode;

@@ -4,9 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.skillbox.currency.exchange.dto.CurrencyDto;
+import ru.skillbox.currency.exchange.dto.ShortCurrencyDto;
 import ru.skillbox.currency.exchange.entity.Currency;
 import ru.skillbox.currency.exchange.mapper.CurrencyMapper;
 import ru.skillbox.currency.exchange.repository.CurrencyRepository;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Collection;
 
 @Slf4j
 @Service
@@ -21,10 +26,19 @@ public class CurrencyService {
         return mapper.convertToDto(currency);
     }
 
-    public Double convertValue(Long value, Long numCode) {
+    public Collection<ShortCurrencyDto> getAll() {
+        log.info("CurrencyService method getAll executed");
+        return repository.findAll()
+                .stream()
+                .map(mapper :: convertToShortDto)
+                .toList();
+    }
+
+    public BigDecimal convertValue(Long value, Long numCode) {
         log.info("CurrencyService method convertValue executed");
         Currency currency = repository.findByIsoNumCode(numCode);
-        return value * currency.getValue();
+        return new BigDecimal(value).multiply(currency.getValue())
+                .divide(new BigDecimal(currency.getNominal()),2, RoundingMode.HALF_EVEN);
     }
 
     public CurrencyDto create(CurrencyDto dto) {
