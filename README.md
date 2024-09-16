@@ -1,5 +1,4 @@
 # Сервис Обмен валюты
-Приложение для практического кейса "Обмен Валюты" обучающей платформы [Skillbox](https://skillbox.ru)
 
 ## Используемые технологии
 
@@ -55,11 +54,18 @@ curl --request POST \
 }'
 ```
 
-Получение Валюты по id
+Получение сведений о валюте по id
 
 ```bash
 curl --request GET \
   --url http://localhost:8080/api/currency/1333
+```
+
+Получение списка валют доступных для конвертации
+
+```bash
+curl --request GET \
+  --url http://localhost:8080/api/currency
 ```
 
 Конвертация валюты по числовому коду
@@ -68,3 +74,6 @@ curl --request GET \
 curl --request GET \
 --url http://localhost:8080/api/currency/convert?value=100&numCode=840
 ```
+
+_**Курсы валют обновляются на основе данных Центрального банка РФ раз в час. Частоту обновления можно изменить
+в файле application.yml**_
