@@ -2,6 +2,7 @@ package ru.skillbox.currency.exchange.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import ru.skillbox.currency.exchange.data.model.CurrencyXML;
 import ru.skillbox.currency.exchange.dto.CurrencyDto;
 import ru.skillbox.currency.exchange.dto.ShortCurrencyDto;
 import ru.skillbox.currency.exchange.entity.Currency;
@@ -17,4 +18,10 @@ public interface CurrencyMapper {
     ShortCurrencyDto convertToShortDto(Currency currency);
 
     Currency convertToEntity(CurrencyDto currencyDto);
+
+    @Mapping(target = "value",
+            expression = "java(new java.math.BigDecimal(currencyXML.getValue().replace(\",\", \".\")))")
+    @Mapping(target = "isoNumCode", source = "numCode")
+    @Mapping(target = "isoCharCode", source = "charCode")
+    Currency convertXMLToEntity(CurrencyXML currencyXML);
 }

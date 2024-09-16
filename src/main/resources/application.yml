@@ -21,3 +21,5 @@ spring:
         hbm2ddl:
           auto: none
 
+cbr_currency_market_url:  https://cbr.ru/scripts/XML_daily.asp
+get_cbr_info_delay_millis: 3_600_000
